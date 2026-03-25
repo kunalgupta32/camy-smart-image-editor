@@ -1,202 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Camy — Image Editor</title>
-  <meta name="description" content="Camy: Modern browser-based image editor with adjustments, crop, transforms, vignette, text overlays and export." />
+  <meta name="description"
+    content="Camy: Modern browser-based image editor with adjustments, crop, transforms, vignette, text overlays and export." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Mukta:wght@400;600;700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<!-- ══════════════════════ UPLOAD SCREEN ══════════════════════ -->
-<div id="upload-screen">
-  <div class="bg-orbs">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
+  <!-- ══════════════════════ UPLOAD SCREEN ══════════════════════ -->
+  <div id="upload-screen">
+    <div class="bg-orbs">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
+    </div>
+    <div class="upload-card">
+      <div class="brand">
+        <span class="material-icons-round brand-icon">photo_camera</span>
+        <h1>Camy</h1>
+        <p class="brand-sub">Professional Image Editor — In Your Browser</p>
+      </div>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*" hidden />
+        <span class="material-icons-round drop-icon">cloud_upload</span>
+        <h2>Drop an image here</h2>
+        <p>or <span class="link">click to browse</span> &bull; PNG · JPG · WebP · GIF</p>
+      </div>
+    </div>
   </div>
-  <div class="upload-card">
-    <div class="brand">
-      <span class="material-icons-round brand-icon">photo_camera</span>
-      <h1>Camy</h1>
-      <p class="brand-sub">Professional Image Editor — In Your Browser</p>
-    </div>
-    <div class="drop-zone" id="dropZone">
-      <input type="file" id="fileInput" accept="image/*" hidden />
-      <span class="material-icons-round drop-icon">cloud_upload</span>
-      <h2>Drop an image here</h2>
-      <p>or <span class="link">click to browse</span> &bull; PNG · JPG · WebP · GIF</p>
-    </div>
-  </div>
-</div>
 
-<!-- ══════════════════════ EDITOR ══════════════════════ -->
-<div id="editor" class="hidden">
+  <!-- ══════════════════════ EDITOR ══════════════════════ -->
+  <div id="editor" class="hidden">
 
-  <!-- Header -->
-  <header id="appHeader">
-    <div class="h-left">
-      <div class="logo-brand">
-        <span class="material-icons-round">photo_camera</span>
-        <span class="logo-text">Camy</span>
-      </div>
-    </div>
-
-    <nav class="tab-bar" id="tabBar">
-      <button class="tab active" data-panel="adjust"    data-tip="Adjustments"><span class="material-icons-round">tune</span><span>Adjust</span></button>
-      <button class="tab"        data-panel="transform" data-tip="Transform">   <span class="material-icons-round">crop_rotate</span><span>Transform</span></button>
-      <button class="tab"        data-panel="crop"      data-tip="Crop Tool">   <span class="material-icons-round">crop</span><span>Crop</span></button>
-      <button class="tab"        data-panel="vignette"  data-tip="Vignette">    <span class="material-icons-round">vignette</span><span>Vignette</span></button>
-      <button class="tab"        data-panel="text"      data-tip="Text Overlay"><span class="material-icons-round">text_fields</span><span>Text</span></button>
-      <button class="tab"        data-panel="compare"   data-tip="Before/After"><span class="material-icons-round">compare</span><span>Compare</span></button>
-    </nav>
-
-    <div class="h-right">
-      <input type="file" id="importFileInput" accept="image/*" hidden />
-      <button class="icon-btn" id="importBtn" data-tip="Import new image"><span class="material-icons-round">add_photo_alternate</span></button>
-      <button class="icon-btn" id="undoBtn"    data-tip="Undo (Ctrl+Z)"   disabled><span class="material-icons-round">undo</span></button>
-      <button class="icon-btn" id="redoBtn"    data-tip="Redo (Ctrl+Y)"   disabled><span class="material-icons-round">redo</span></button>
-      <button class="icon-btn" id="resetBtn"   data-tip="Reset all edits"><span class="material-icons-round">refresh</span></button>
-      <button class="icon-btn" id="enhanceBtn" data-tip="Auto Enhance">   <span class="material-icons-round">auto_awesome</span></button>
-      <button class="export-btn" id="exportBtn">
-        <span class="material-icons-round">download</span>Export
-      </button>
-    </div>
-  </header>
-
-  <!-- Body -->
-  <div id="appBody">
-
-    <!-- Sidebar -->
-    <aside id="sidebar">
-
-      <!-- Adjust Panel -->
-      <div class="panel" id="panel-adjust">
-        <div class="panel-title"><span class="material-icons-round">tune</span>Adjustments</div>
-        <div class="field">
-          <div class="field-row"><label>Brightness</label><span class="val" id="bVal">100</span></div>
-          <input type="range" class="slider" id="brightness" min="0" max="200" value="100" />
+    <!-- Header -->
+    <header id="appHeader">
+      <div class="h-left">
+        <div class="logo-brand">
+          <span class="material-icons-round">photo_camera</span>
+          <span class="logo-text">Camy</span>
         </div>
-        <div class="field">
-          <div class="field-row"><label>Contrast</label><span class="val" id="cVal">100</span></div>
-          <input type="range" class="slider" id="contrast" min="0" max="200" value="100" />
-        </div>
-        <div class="field">
-          <div class="field-row"><label>Saturation</label><span class="val" id="sVal">100</span></div>
-          <input type="range" class="slider" id="saturation" min="0" max="200" value="100" />
-        </div>
-        <div class="field">
-          <div class="field-row"><label>Blur</label><span class="val" id="blurVal">0</span></div>
-          <input type="range" class="slider" id="blurSlider" min="0" max="20" value="0" />
-        </div>
+        <button class="icon-btn" id="themeBtn" data-tip="Toggle Light/Dark"><span
+            class="material-icons-round">light_mode</span></button>
       </div>
 
-      <!-- Transform Panel -->
-      <div class="panel hidden" id="panel-transform">
-        <div class="panel-title"><span class="material-icons-round">crop_rotate</span>Transform</div>
-        <div class="btn-grid2">
-          <button class="card-btn" id="rotL"><span class="material-icons-round">rotate_left</span>Rotate Left</button>
-          <button class="card-btn" id="rotR"><span class="material-icons-round">rotate_right</span>Rotate Right</button>
-          <button class="card-btn" id="flipH"><span class="material-icons-round">flip</span>Flip H</button>
-          <button class="card-btn" id="flipV"><span class="material-icons-round flip-v">flip</span>Flip V</button>
-        </div>
-        <div class="info-box">Rotation: <strong id="rotDisplay">0°</strong></div>
-      </div>
+      <nav class="tab-bar" id="tabBar">
+        <button class="tab active" data-panel="adjust" data-tip="Adjustments"><span
+            class="material-icons-round">tune</span><span>Adjust</span></button>
+        <button class="tab" data-panel="filters" data-tip="Filters"> <span
+            class="material-icons-round">color_lens</span><span>Filters</span></button>
+        <button class="tab" data-panel="transform" data-tip="Transform"> <span
+            class="material-icons-round">crop_rotate</span><span>Transform</span></button>
+        <button class="tab" data-panel="text" data-tip="Text Overlay"><span
+            class="material-icons-round">text_fields</span><span>Text</span></button>
+        <button class="tab" data-panel="history" data-tip="Edit History"><span
+            class="material-icons-round">history</span><span>History</span></button>
+      </nav>
 
-      <!-- Crop Panel -->
-      <div class="panel hidden" id="panel-crop">
-        <div class="panel-title"><span class="material-icons-round">crop</span>Crop</div>
-        <p class="hint">Drag a rectangle on the canvas to select the crop area.</p>
-        <div class="btn-col">
-          <button class="btn-primary" id="applyCropBtn" disabled><span class="material-icons-round">check</span>Apply Crop</button>
-          <button class="btn-ghost"   id="cancelCropBtn"><span class="material-icons-round">close</span>Cancel</button>
+      <div class="h-right">
+        <input type="file" id="importFileInput" accept="image/*" hidden />
+        <button class="icon-btn" id="importBtn" data-tip="Import new image"><span
+            class="material-icons-round">add_photo_alternate</span></button>
+        <button class="icon-btn" id="undoBtn" data-tip="Undo (Ctrl+Z)" disabled><span
+            class="material-icons-round">undo</span></button>
+        <button class="icon-btn" id="redoBtn" data-tip="Redo (Ctrl+Y)" disabled><span
+            class="material-icons-round">redo</span></button>
+        <button class="icon-btn" id="resetBtn" data-tip="Reset all edits"><span
+            class="material-icons-round">refresh</span></button>
+        <button class="icon-btn" id="enhanceBtn" data-tip="Auto Enhance"> <span
+            class="material-icons-round">auto_awesome</span></button>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <select id="exportFormat" class="select-css"
+            style="padding: 0 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--txt1); font-weight: 600; font-size: 13px; font-family: inherit; outline: none; height: 38px; cursor: pointer;">
+            <option value="png">PNG</option>
+            <option value="jpeg">JPEG</option>
+            <option value="webp">WEBP</option>
+          </select>
+          <button class="export-btn" id="exportBtn">
+            <span class="material-icons-round">download</span>Export
+          </button>
         </div>
       </div>
+    </header>
 
-      <!-- Vignette Panel -->
-      <div class="panel hidden" id="panel-vignette">
-        <div class="panel-title"><span class="material-icons-round">vignette</span>Vignette</div>
-        <div class="field">
-          <div class="field-row"><label>Intensity</label><span class="val" id="vigVal">0</span></div>
-          <input type="range" class="slider" id="vigSlider" min="0" max="100" value="0" />
-        </div>
-      </div>
+    <!-- Body -->
+    <div id="appBody">
 
-      <!-- Text Panel -->
-      <div class="panel hidden" id="panel-text">
-        <div class="panel-title"><span class="material-icons-round">text_fields</span>Text Overlay</div>
-        <button class="btn-primary" id="addTextBtn"><span class="material-icons-round">add</span>Add Text Block</button>
-        <div id="textControls" class="hidden mt">
-          <div class="field"><label>Content</label><input type="text" id="txtContent" placeholder="Type your text…" /></div>
-          <div class="field"><label>Font</label>
-            <select id="txtFont">
-              <option value="Inter, sans-serif">Inter</option>
-              <option value="Impact, sans-serif">Impact</option>
-              <option value="Arial Black, sans-serif">Arial Black</option>
-              <option value="Georgia, serif">Georgia</option>
-              <option value="'Courier New', monospace">Courier New</option>
-            </select>
-          </div>
-          <div class="two-col">
-            <div class="field"><label>Color</label><input type="color" id="txtColor" value="#ffffff" /></div>
-            <div class="field"><label>Stroke</label><input type="color" id="txtStrokeColor" value="#000000" /></div>
+      <!-- Sidebar -->
+      <aside id="sidebar">
+
+        <!-- Adjust Panel -->
+        <div class="panel" id="panel-adjust">
+          <div class="panel-title"><span class="material-icons-round">tune</span>Adjustments</div>
+          <div class="field">
+            <div class="field-row"><label>Brightness</label><span class="val" id="brightVal">100</span></div>
+            <input type="range" class="slider" id="brightness" min="0" max="200" value="100" />
           </div>
           <div class="field">
-            <div class="field-row"><label>Size</label><span class="val" id="txtSizeVal">48</span></div>
-            <input type="range" class="slider" id="txtSize" min="10" max="160" value="48" />
+            <div class="field-row"><label>Contrast</label><span class="val" id="cVal">100</span></div>
+            <input type="range" class="slider" id="contrast" min="0" max="200" value="100" />
           </div>
           <div class="field">
-            <div class="field-row"><label>Stroke Width</label><span class="val" id="txtStrokeVal">2</span></div>
-            <input type="range" class="slider" id="txtStroke" min="0" max="10" value="2" />
+            <div class="field-row"><label>Saturation</label><span class="val" id="sVal">100</span></div>
+            <input type="range" class="slider" id="saturation" min="0" max="200" value="100" />
           </div>
-          <button class="btn-danger mt" id="removeTextBtn"><span class="material-icons-round">delete</span>Remove Selected</button>
-        </div>
-      </div>
+          <!-- Advanced adjustments -->
+          <hr class="panel-divider" />
+          <div class="field">
+            <div class="field-row"><label>Temperature</label><span class="val" id="tVal">0</span></div>
+            <input type="range" class="slider" id="tempSlider" min="-100" max="100" value="0" />
+          </div>
+          <div class="field">
+            <div class="field-row"><label>Shadows</label><span class="val" id="shVal">0</span></div>
+            <input type="range" class="slider" id="shadowsSlider" min="-100" max="100" value="0" />
+          </div>
+          <div class="field">
+            <div class="field-row"><label>Highlights</label><span class="val" id="hlVal">0</span></div>
+            <input type="range" class="slider" id="highlightsSlider" min="-100" max="100" value="0" />
+          </div>
+          <div class="field">
+            <div class="field-row"><label>Sharpness</label><span class="val" id="sharpVal">0</span></div>
+            <input type="range" class="slider" id="sharpSlider" min="0" max="100" value="0" />
+          </div>
 
-      <!-- Compare Panel -->
-      <div class="panel hidden" id="panel-compare">
-        <div class="panel-title"><span class="material-icons-round">compare</span>Before / After</div>
-        <p class="hint">Drag the divider on the canvas to compare original vs edited image.</p>
-      </div>
+          <hr class="panel-divider" />
+          <div class="panel-title"><span class="material-icons-round">palette</span>Color Channels</div>
+          <div class="field">
+            <div class="field-row"><label>Red</label><span class="val" id="rVal">0</span></div>
+            <input type="range" class="slider" id="rSlider" min="-100" max="100" value="0" />
+          </div>
+          <div class="field">
+            <div class="field-row"><label>Green</label><span class="val" id="gVal">0</span></div>
+            <input type="range" class="slider" id="gSlider" min="-100" max="100" value="0" />
+          </div>
+          <div class="field">
+            <div class="field-row"><label>Blue</label><span class="val" id="blueVal">0</span></div>
+            <input type="range" class="slider" id="bSlider" min="-100" max="100" value="0" />
+          </div>
 
-    </aside>
+          <hr class="panel-divider" />
+          <div class="field">
+            <div class="field-row"><label>Vignette</label><span class="val" id="vigVal">0</span></div>
+            <input type="range" class="slider" id="vigSlider" min="0" max="100" value="0" />
+          </div>
 
-    <!-- Canvas Workspace -->
-    <main id="workspace">
-      <div id="canvasWrap">
-        <canvas id="mainCanvas"></canvas>
-        <div id="vignetteLayer"></div>
-        <div id="textLayer"></div>
-        <!-- Crop overlay -->
-        <div id="cropOverlay" class="hidden">
-          <div class="crop-dim top"></div>
-          <div class="crop-dim left"></div>
-          <div class="crop-dim right"></div>
-          <div class="crop-dim bottom"></div>
-          <div class="crop-box"></div>
-        </div>
-        <!-- Compare slider -->
-        <div id="compareSlider" class="hidden">
-          <canvas id="compareCanvas"></canvas>
-          <div class="cmp-divider">
-            <span class="cmp-label cmp-label-l">Before</span>
-            <div class="cmp-handle"><span class="material-icons-round">chevron_left</span><span class="material-icons-round">chevron_right</span></div>
-            <span class="cmp-label cmp-label-r">After</span>
+          <hr class="panel-divider" />
+          <div class="field">
+            <div class="field-row"><label>Blur</label><span class="val" id="blurVal">0</span></div>
+            <input type="range" class="slider" id="blurSlider" min="0" max="20" value="0" />
+            <div class="mask-opts mt">
+              <button class="mask-btn active" data-mask="none" data-tip="No Mask"><span
+                  class="material-icons-round">blur_off</span></button>
+              <button class="mask-btn" data-mask="radial" data-tip="Radial Mask"><span
+                  class="material-icons-round">lens_blur</span></button>
+              <button class="mask-btn" data-mask="linear" data-tip="Linear Mask"><span
+                  class="material-icons-round">gradient</span></button>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
 
+        <!-- Filters Panel -->
+        <div class="panel hidden" id="panel-filters">
+          <div class="panel-title"><span class="material-icons-round">color_lens</span>Filters</div>
+          <div class="field">
+            <div class="field-row"><label>Intensity</label><span class="val" id="filterIntVal">100</span></div>
+            <input type="range" class="slider" id="filterIntensity" min="0" max="100" value="100" />
+          </div>
+          <div class="filter-grid" id="filterGrid">
+            <button class="filter-btn active" data-filter="none">None</button>
+            <button class="filter-btn" data-filter="vintage">Vintage</button>
+            <button class="filter-btn" data-filter="bw">B&W</button>
+            <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+            <button class="filter-btn" data-filter="sepia">Sepia</button>
+            <button class="filter-btn" data-filter="polaroid">Polaroid</button>
+            <button class="filter-btn" data-filter="cool">Cool</button>
+          </div>
+        </div>
+
+        <!-- Transform Panel -->
+        <div class="panel hidden" id="panel-transform">
+          <div class="panel-title"><span class="material-icons-round">crop_rotate</span>Transform</div>
+          <div class="btn-grid2">
+            <button class="card-btn" id="rotL"><span class="material-icons-round">rotate_left</span>Rotate Left</button>
+            <button class="card-btn" id="rotR"><span class="material-icons-round">rotate_right</span>Rotate
+              Right</button>
+            <button class="card-btn" id="flipH"><span class="material-icons-round">flip</span>Flip H</button>
+            <button class="card-btn" id="flipV"><span class="material-icons-round flip-v">flip</span>Flip V</button>
+          </div>
+          <div class="info-box">Rotation: <strong id="rotDisplay">0°</strong></div>
+
+          <hr class="panel-divider" />
+          <div class="panel-title"><span class="material-icons-round">crop</span>Crop</div>
+          <p class="hint">Drag a rectangle on the canvas to select the crop area.</p>
+          <div class="btn-col">
+            <button class="btn-primary" id="applyCropBtn" disabled><span class="material-icons-round">check</span>Apply
+              Crop</button>
+            <button class="btn-ghost" id="cancelCropBtn"><span class="material-icons-round">close</span>Cancel</button>
+          </div>
+        </div>
+
+
+
+        <!-- Text Panel -->
+        <div class="panel hidden" id="panel-text">
+          <div class="panel-title"><span class="material-icons-round">text_fields</span>Text Overlay</div>
+          <button class="btn-primary" id="addTextBtn"><span class="material-icons-round">add</span>Add Text
+            Block</button>
+          <div id="textControls" class="hidden mt">
+            <div class="field"><label>Content</label><input type="text" id="txtContent" placeholder="Type your text…" />
+            </div>
+            <div class="field"><label>Font</label>
+              <select id="txtFont">
+                <option value="Inter, sans-serif">Inter (Modern)</option>
+                <option value="'Mukta', sans-serif">Mukta (Devanagari/Nepali)</option>
+                <option value="'Poppins', sans-serif">Poppins</option>
+                <option value="'Roboto', sans-serif">Roboto</option>
+                <option value="'Playfair Display', serif">Playfair Display</option>
+                <option value="Impact, sans-serif">Impact</option>
+                <option value="Arial Black, sans-serif">Arial Black</option>
+                <option value="Courier New, monospace">Courier New</option>
+                <option value="Times New Roman, serif">Times New Roman</option>
+                <option value="Comic Sans MS, cursive">Comic Sans</option>
+              </select>
+            </div>
+            <div class="two-col">
+              <div class="field"><label>Color</label><input type="color" id="txtColor" value="#ffffff" /></div>
+              <div class="field"><label>Stroke</label><input type="color" id="txtStrokeColor" value="#000000" /></div>
+            </div>
+            <div class="field">
+              <div class="field-row"><label>Size</label><span class="val" id="txtSizeVal">48</span></div>
+              <input type="range" class="slider" id="txtSize" min="10" max="160" value="48" />
+            </div>
+            <div class="field">
+              <div class="field-row"><label>Stroke Width</label><span class="val" id="txtStrokeVal">2</span></div>
+              <input type="range" class="slider" id="txtStroke" min="0" max="10" value="2" />
+            </div>
+            <button class="btn-danger mt" id="removeTextBtn"><span class="material-icons-round">delete</span>Remove
+              Selected</button>
+          </div>
+        </div>
+
+        <!-- History Panel -->
+        <div class="panel hidden" id="panel-history">
+          <div class="panel-title"><span class="material-icons-round">history</span>Edit History</div>
+          <p class="hint">Click an action below to revert to that state.</p>
+          <div class="history-list" id="historyList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- Canvas Workspace -->
+      <main id="workspace">
+        <div id="canvasWrap">
+          <canvas id="mainCanvas"></canvas>
+          <div id="vignetteLayer"></div>
+          <div id="textLayer"></div>
+          <!-- Crop overlay -->
+          <div id="cropOverlay" class="hidden">
+            <div class="crop-dim top"></div>
+            <div class="crop-dim left"></div>
+            <div class="crop-dim right"></div>
+            <div class="crop-dim bottom"></div>
+            <div class="crop-box"></div>
+          </div>
+          <!-- Blur Mask UI -->
+          <div id="blurMaskUI" class="hidden">
+            <div class="mask-handle" id="maskHandle"></div>
+            <div class="mask-radius" id="maskRadius"></div>
+          </div>
+          <!-- Floating Compare Button -->
+          <button id="floatingCompare" class="floating-compare" data-tip="Hold to view original">
+            <span class="material-icons-round">compare</span>
+          </button>
+        </div>
+      </main>
+
+    </div>
   </div>
-</div>
 
-<!-- Toasts -->
-<div id="toastRoot"></div>
+  <!-- Toasts -->
+  <div id="toastRoot"></div>
 
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>

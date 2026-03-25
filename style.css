@@ -13,6 +13,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   --red:#ff4466;
   --r4:6px;--r8:10px;--r12:14px;--r20:20px;
   --t1:140ms ease;--t2:240ms ease;--t3:380ms ease;
+  --shadow1:0 4px 20px rgba(0,0,0,.4);
+  --shadow2:0 20px 60px rgba(0,0,0,.7);
+}
+
+/* Light Theme Overrides */
+body.light {
+  --bg0:#f0f2f5;--bg1:#ffffff;--bg2:#f7f9fc;--bg3:#f0f2f5;--bg4:#e4e7eb;
+  --border:#dbe0e5;--border2:#c1c7cf;
+  --txt1:#000000;--txt2:#111827;--txt3:#4b5563;
+  --accent:#059669;--accent2:#0284c7;--accentGlow:rgba(5,150,105,.12);
+  --shadow1:0 4px 12px rgba(0,0,0,.08);
+  --shadow2:0 20px 40px rgba(0,0,0,.15);
 }
 
 /* ═══════════════════════════════════════════
@@ -37,7 +49,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   padding:60px 48px;width:min(520px,92vw);
   background:rgba(18,18,28,.7);backdrop-filter:blur(20px);
   border:1px solid var(--border);border-radius:var(--r20);
-  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  box-shadow:var(--shadow2);
+}
+
+body.light .upload-card {
+  background:rgba(255,255,255,.9);
 }
 
 /* Brand */
@@ -48,7 +64,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.brand-sub{color:var(--txt2);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;margin-top:8px;font-weight:300}
+.brand-sub{color:var(--txt2);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;margin-top:8px;font-weight:300;transition:color var(--t2)}
 
 /* Drop Zone */
 .drop-zone{
@@ -77,13 +93,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   background:var(--bg1);border-bottom:1px solid var(--border);flex-shrink:0;z-index:10;
 }
 .h-left,.h-right{display:flex;align-items:center;gap:4px}
-.logo-btn{
+.logo-brand{
   display:flex;align-items:center;gap:7px;padding:6px 10px;
   border-radius:var(--r8);transition:background var(--t1);color:var(--txt1);
 }
-.logo-btn:hover{background:var(--bg4)}
-.logo-btn .material-icons-round{font-size:22px;color:var(--accent)}
-.logo-text{font-size:15px;font-weight:700;letter-spacing:-.4px}
+.logo-brand:hover{background:var(--bg4)}
+.logo-brand .material-icons-round{font-size:22px;color:var(--accent)}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:-.4px;color:var(--txt1)}
 
 /* Tab bar */
 .tab-bar{display:flex;align-items:center;gap:2px}
@@ -137,7 +153,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ── Sidebar ── */
 #sidebar{
   width:268px;min-width:268px;background:var(--bg1);border-right:1px solid var(--border);
-  overflow-y:auto;padding:18px;flex-shrink:0;
+  overflow-y:auto;padding:18px;padding-bottom:60px;flex-shrink:0;
 }
 #sidebar::-webkit-scrollbar{width:3px}
 #sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
@@ -205,6 +221,26 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .btn-danger{background:rgba(255,68,102,.1);border:1px solid rgba(255,68,102,.2);color:var(--red)}
 .btn-danger:hover{background:rgba(255,68,102,.2)}
 .mt{margin-top:10px}
+.panel-divider{border:none;border-top:1px solid var(--border);margin:16px 0}
+
+/* Filters Component */
+.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.filter-btn{padding:12px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r8);color:var(--txt2);font-size:12px;font-weight:600;cursor:pointer;transition:all var(--t1)}
+.filter-btn:hover{background:var(--bg4);color:var(--txt1)}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accentGlow)}
+
+/* History Component */
+.history-list{display:flex;flex-direction:column;gap:4px}
+.history-item{display:flex;align-items:center;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r8);cursor:pointer;transition:all var(--t1);color:var(--txt2);font-size:12px;font-weight:600}
+.history-item:hover{background:var(--bg4);color:var(--txt1)}
+.history-item.active{border-color:var(--accent);color:var(--accent);background:var(--accentGlow)}
+
+/* Mask buttons */
+.mask-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.mask-btn{display:flex;align-items:center;justify-content:center;padding:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r4);color:var(--txt2);transition:all var(--t1)}
+.mask-btn:hover{background:var(--bg4);color:var(--txt1)}
+.mask-btn.active{background:var(--accentGlow);color:var(--accent);border-color:var(--accent)}
+.mask-btn .material-icons-round{font-size:18px}
 
 /* ═══════════════════════════════════════════
    WORKSPACE
@@ -217,7 +253,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 #canvasWrap{
   position:relative;display:inline-block;
   border-radius:var(--r12);overflow:hidden;
-  box-shadow:0 0 0 1px var(--border),0 20px 60px rgba(0,0,0,.7);
+  box-shadow:0 0 0 1px var(--border),var(--shadow2);
 }
 #mainCanvas{display:block;max-width:100%;max-height:100%}
 
@@ -255,30 +291,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .crop-box::before{top:-1px;left:-1px}
 .crop-box::after{bottom:-1px;right:-1px}
 
-/* Compare slider */
-#compareSlider{position:absolute;inset:0;z-index:12;overflow:hidden;border-radius:var(--r12)}
-#compareCanvas{position:absolute;top:0;left:0;height:100%;clip-path:inset(0 50% 0 0)}
-.cmp-divider{
-  position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:ew-resize;z-index:2;gap:4px;
-}
-.cmp-divider::before{content:'';position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;background:rgba(255,255,255,.9)}
-.cmp-handle{
-  display:flex;align-items:center;justify-content:center;
-  width:36px;height:36px;background:#fff;border-radius:50%;
-  color:#222;box-shadow:0 2px 12px rgba(0,0,0,.5);z-index:3;
-  transition:transform var(--t1);
-}
-.cmp-handle:hover{transform:scale(1.1)}
-.cmp-handle .material-icons-round{font-size:20px}
-.cmp-label{
-  position:absolute;top:10px;padding:3px 10px;
-  background:rgba(0,0,0,.65);color:#fff;
-  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:var(--r4);backdrop-filter:blur(4px);
-}
-.cmp-label-l{left:10px}.cmp-label-r{right:10px}
+/* Mask Overlay UI */
+#blurMaskUI{position:absolute;inset:0;z-index:11;pointer-events:all;cursor:crosshair}
+.mask-handle{position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(0,0,0,.5);pointer-events:all;cursor:move}
+.mask-radius{position:absolute;border:1px dashed rgba(255,255,255,.8);border-radius:50%;transform:translate(-50%,-50%);pointer-events:all;cursor:nwse-resize}
+
+/* Floating Compare */
+.floating-compare{position:absolute;top:12px;right:12px;width:36px;height:36px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;z-index:20;cursor:pointer;transition:background var(--t1), transform var(--t1);box-shadow:var(--shadow1)}
+.floating-compare:hover{background:rgba(0,0,0,.8);transform:scale(1.05)}
+.floating-compare:active{transform:scale(0.95)}
+.floating-compare .material-icons-round{font-size:18px}
+body.light .floating-compare{background:rgba(255,255,255,.8);color:#111}
+body.light .floating-compare:hover{background:#fff}
 
 /* ═══════════════════════════════════════════
    TOASTS
@@ -286,8 +310,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 #toastRoot{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
 .toast{
   display:flex;align-items:center;gap:9px;padding:10px 18px;min-width:180px;
-  background:var(--bg4);border:1px solid var(--border2);border-radius:var(--r8);
-  box-shadow:0 4px 20px rgba(0,0,0,.4);font-size:13px;font-weight:500;
+  background:var(--bg4);border:1px solid var(--border);border-radius:var(--r8);
+  box-shadow:var(--shadow1);font-size:13px;font-weight:500;
   animation:toastIn var(--t2);
 }
 .toast.off{animation:toastOut var(--t2) forwards}
